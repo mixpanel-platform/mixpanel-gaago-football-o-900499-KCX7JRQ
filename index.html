@@ -7,6 +7,7 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <script src="/html2canvas.js"></script>
   </head>
   <body class="mixpanel-platform-body">
     <style>
@@ -22,7 +23,7 @@
       #event_list {
         display: inline-block;
       }
-      #run, #funnel-query, #print .alert-ok {
+      #run, #funnel-query, #print, .alert-ok {
         clear:both;
         vertical-align: 1px;
         margin-left: 10px;
@@ -290,7 +291,16 @@
         runQuery();
       });
       $('#print').on('click', function() {
-        printDiv("print-area");
+        // for printing to pdf
+        html2canvas(document.body, {
+          onrendered: function(canvas) {
+            // var originalContents = document.body.innerHTML;
+            // document.body.innerHTML = canvas;
+            // document.body.innerHTML = originalContents;
+            document.body.appendChild(canvas);
+            window.print();
+          }
+        });
       });
       $('#funnel-query').on('click', function() {
         var newEvents = [];
@@ -309,14 +319,6 @@
         });
       });
       
-      // for printing to pdf
-      function printDiv(divName) {
-        var printContents = document.getElementById(divName);
-        var originalContents = document.body;
-        document.body = printContents;
-        window.print();
-        document.body = originalContents;
-      }
 
       function error(message) {
         var alert = $('<div class="alert"><div class="alert-title">Error</div><div class="alert-content">' + message + '</div><div class="alert-ok">OK</div></div>');
