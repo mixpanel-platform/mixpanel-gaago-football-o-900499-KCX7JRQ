@@ -311,11 +311,11 @@
       
       // for printing to pdf
       function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
+        var printContents = document.getElementById(divName);
+        var originalContents = document.body;
+        document.body = printContents;
         window.print();
-        document.body.innerHTML = originalContents;
+        document.body = originalContents;
       }
 
       function error(message) {
