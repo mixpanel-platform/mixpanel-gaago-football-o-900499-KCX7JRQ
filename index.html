@@ -9,6 +9,7 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
     <script src="https://dl.dropboxusercontent.com/u/14270616/octokat.js"></script>
     <script src="https://dl.dropboxusercontent.com/u/14270616/html2canvas.js"></script>
+    <script src="https://dl.dropboxusercontent.com/u/14270616/config.js"></script>
   </head>
   <body class="mixpanel-platform-body">
     <style>
@@ -287,8 +288,7 @@
       var funnel_select = [];
 
       // setup github
-      var octo = new Octokat({ token: "fd2418fb419be3702dc070ff115e05f3b058a30b"
-      });
+      var octo = new Octokat({ token: ghToken  });
       var repo = octo.repos('mixpanel-platform', 'mixpanel-gaago-football-o-900499-KCX7JRQ');
       var newSHA = "57e66f081d11b72d7b9f47dd7d9557bfda38eb0b";
 
