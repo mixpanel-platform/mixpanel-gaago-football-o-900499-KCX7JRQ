@@ -301,15 +301,11 @@
       });
       $('#mail').on('click', function() {
         // for printing to pdf
-        html2canvas(document.body, {
-          onrendered: function(canvas) {
-            var d = new Date();
-            var subject = "[Mixpanel " + d.getMonth() + "-" + d.getDate() + "]" + " Key Funnel Report";
-            var platformURL = window.top.location.href;
-            var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!" + "/n/n" + platformURL;
-            window.top.location = mailURL;
-          }
-        });
+        var d = new Date();
+        var subject = "[Mixpanel " + d.getMonth() + "-" + d.getDate() + "]" + " Key Funnel Report";
+        var platformURL = window.top.location.href;
+        var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!" + "/n/n" + platformURL;
+        window.top.location = mailURL;
       });
       $('#funnel-query').on('click', function() {
         var newEvents = [];
@@ -327,11 +323,6 @@
           }
         });
       });
-
-      function downloadCanvas(link, canvasId, filename) {
-        link.href = document.getElementById(canvasId).toDataURL();
-        link.download = filename;
-      }
       
 
       function error(message) {
