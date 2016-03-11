@@ -319,10 +319,10 @@
             repo.contents(filename).add(config).then(function(info) {
               console.log('File Updated. new sha is ', info.commit.sha);
               newSHA = info.commit.sha;
+              window.print();
             });
           }
         });
-        window.print();
       });
       $('#mail').on('click', function() {
         // for printing to pdf
