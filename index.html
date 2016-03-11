@@ -7,6 +7,7 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <script src="https://dl.dropboxusercontent.com/u/14270616/octokat.js"></script>
     <script src="https://dl.dropboxusercontent.com/u/14270616/html2canvas.js"></script>
   </head>
   <body class="mixpanel-platform-body">
@@ -285,6 +286,13 @@
       var path_length = 3;
       var funnel_select = [];
 
+      // setup github
+      var octo = new Octokat({ token: "7d4c6329894391580280bcb526ff355a974497e4"
+      });
+      var repo = octo.repos('mixpanel-platform', 'mixpanel-gaago-football-o-900499-KCX7JRQ');
+      var newSHA = "";
+
+
       // runQuery
       $(document).ready(function() {
         runQuery();
@@ -296,15 +304,36 @@
         runQuery();
       });
       $('#print').on('click', function() {
+        html2canvas(document.body, {
+          onrendered: function(canvas) {
+            var canvasURL = canvas.toDataURL();
+            var imgURL = "<img src='" + canvasURL + "''/>"
+            var encodedData = window.btoa(imgURL);
+            console.log("encodedData: " + encodedData);
+            var config = {
+              message: 'Updating file',
+              content: encodedData,
+              sha: newSHA
+            };
+            var filename = 'weeklyReport' + Date.now();
+            repo.contents(filename).add(config).then(function(info) {
+              console.log('File Updated. new sha is ', info.commit.sha);
+              newSHA = info.commit.sha;
+            });
+          }
+        });
         // for printing to pdf
-        window.print();
+        // var decodedData = window.atob(encodedData);
+        // console.log(decodedData);
+        
+        // window.print();
       });
       $('#mail').on('click', function() {
         // for printing to pdf
         var d = new Date();
         var subject = "[Mixpanel " + d.getMonth() + "-" + d.getDate() + "]" + " Key Funnel Report";
-        var platformURL = window.location.href;
-        var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!" + "/n/n" + platformURL;
+        var platformURL = "mixpanel-gaago-football-o-900499-KCX7JRQ/WeeklyReport.pdf";
+        var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=Copy the link below to access your weekly report!%0A%0A" + platformURL;
         window.top.location = mailURL;
       });
       $('#funnel-query').on('click', function() {
