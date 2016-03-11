@@ -23,7 +23,7 @@
       #event_list {
         display: inline-block;
       }
-      #run, #funnel-query, #print, .alert-ok {
+      #run, #funnel-query, #print, #mail, .alert-ok {
         clear:both;
         vertical-align: 1px;
         margin-left: 10px;
@@ -96,6 +96,9 @@
         margin-left: 55px;
         position: absolute;
         bottom: -51px;
+      }
+      #canvasImg {
+        display: none;
       }
       .line, .label {
         height: 55px;
@@ -243,6 +246,8 @@
         <input id="event_list" value="Purchase Started,Purchase Complete,Watch Match">
         <div id="run">RUN</div>
         <div id="print">PRINT</div>
+        <div id="mail">MAIL</div>
+        <img id="canvasImg" alt="Right click to save me!">
       </div>
       <div id="report">
         <div id="background">
@@ -302,6 +307,17 @@
           }
         });
       });
+      $('#mail').on('click', function() {
+        // for printing to pdf
+        html2canvas(document.body, {
+          onrendered: function(canvas) {
+            var d = new Date();
+            var subject = "[Mixpanel " + d.getMonth() + "-" + d.getDate() + "]" + " Key Funnel Report";
+            var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!";
+            window.location = mailURL;
+          }
+        });
+      });
       $('#funnel-query').on('click', function() {
         var newEvents = [];
 
@@ -318,6 +334,11 @@
           }
         });
       });
+
+      function downloadCanvas(link, canvasId, filename) {
+        link.href = document.getElementById(canvasId).toDataURL();
+        link.download = filename;
+      }
       
 
       function error(message) {
