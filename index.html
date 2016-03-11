@@ -297,15 +297,14 @@
       });
       $('#print').on('click', function() {
         // for printing to pdf
-        html2canvas(document.body, {
-          onrendered: function(canvas) {
-            // var originalContents = document.body.innerHTML;
-            // document.body.innerHTML = canvas;
-            // document.body.innerHTML = originalContents;
-            document.body.appendChild(canvas);
-            window.print();
-          }
-        });
+        window.print();
+
+        // html2canvas(document.body, {
+        //   onrendered: function(canvas) {
+        //     // document.body.appendChild(canvas);
+            
+        //   }
+        // });
       });
       $('#mail').on('click', function() {
         // for printing to pdf
