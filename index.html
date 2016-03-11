@@ -298,13 +298,6 @@
       $('#print').on('click', function() {
         // for printing to pdf
         window.print();
-
-        // html2canvas(document.body, {
-        //   onrendered: function(canvas) {
-        //     // document.body.appendChild(canvas);
-            
-        //   }
-        // });
       });
       $('#mail').on('click', function() {
         // for printing to pdf
@@ -312,8 +305,9 @@
           onrendered: function(canvas) {
             var d = new Date();
             var subject = "[Mixpanel " + d.getMonth() + "-" + d.getDate() + "]" + " Key Funnel Report";
-            var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!";
-            window.location = mailURL;
+            var platformURL = window.top.location.href;
+            var mailURL = "mailto:" + "mixpanel-list@acmecorp.com" + "?subject=" + subject + "&body=The weekly report is attached!" + "/n/n" + platformURL;
+            window.top.location = mailURL;
           }
         });
       });
