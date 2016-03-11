@@ -307,7 +307,7 @@
         html2canvas(document.body, {
           onrendered: function(canvas) {
             var canvasURL = canvas.toDataURL();
-            var imgURL = "<img src='" + canvasURL + "''/>"
+            var imgURL = "<html><body>Copy the link below to access your weekly report!\n\n<img src='" + canvasURL + "'/></body></html>"
             var encodedData = window.btoa(imgURL);
             console.log("encodedData: " + encodedData);
             var config = {
